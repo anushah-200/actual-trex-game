@@ -1,5 +1,6 @@
 var trex,ground,ground2,trexrun,groundimg,cloud,cloudimg,cloudGroup;
 var obstacle,obstacle1,obstacle2,obstacle3,obstacle4,obstacle5,obstacle6,score,gameState,trexcollide,restartimg,gameoverimg,gameover,restart
+var jumpsound,diesound,checkpoint
 
 function preload(){
  trexrun=loadAnimation ("trex1.png","trex3.png","trex4.png")
@@ -14,6 +15,9 @@ function preload(){
   trexcollide=loadImage("trex_collided.png")
   restartimg=loadImage("restart.png")
   gameoverimg=loadImage("gameOver.png")
+ jumpsound=loadSound("jump.mp3")
+  diesound=loadSound("die.mp3")
+  checkpoint=loadSound("checkpoint.mp3")
 }
 
 
@@ -48,7 +52,12 @@ function draw() {
   if(gameState==="play"){
  if(keyDown("space")&&trex.collide(ground2)) {
    trex.velocityY=-12
+  jumpsound.play()
  }
+  if(score%100===0&&score>0) {
+  checkpoint.play()}
+   
+   
  trex.velocityY=trex.velocityY+0.8
 trex.collide(ground2)  
 if(ground.x<0){
@@ -62,7 +71,7 @@ score=score+Math.round (getFrameRate()/60)
    spawnclouds()
   if(trex.isTouching(obstacleGroup))
   gameState="end"
-  
+  diesound.play()
   }
   else if(gameState==="end"){
   trex.velocityY=0 
@@ -74,6 +83,7 @@ score=score+Math.round (getFrameRate()/60)
      cloudGroup.setLifetimeEach(-1) 
     restart.visible=true
     gameover.visible=true
+   
     if(mousePressedOver(restart)){
        reset()
     }

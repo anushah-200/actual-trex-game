@@ -17,7 +17,7 @@ function preload(){
   gameoverimg=loadImage("gameOver.png")
  jumpsound=loadSound("jump.mp3")
   diesound=loadSound("die.mp3")
-  checkpoint=loadSound("checkpoint.mp3")
+  checkpoint=loadSound("checkPoint.mp3")
 }
 
 
